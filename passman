@@ -56,6 +56,12 @@ function dmenu_select
     eval 'dmenu $default_options $DMENU_OPTIONS -p "Select:"'
 }
 
+# Helper function to escape backslashes of the given parameter.
+function esc_bs
+{
+    echo $1 | sed 's/\\/\\\\/g'
+}
+
 # Helper function to get a single line of the passfile matching the given key.
 #
 # The line is echoed to stdout. It is ensured that it contains all columns, even
@@ -67,10 +73,10 @@ function get_passfile_line
     local key="$1"
     local line=$(read_passfile | grep -P "^$key\t")
     if [ -n "$line" ]; then
-        local user=$(echo "$line" | cut -f $USER_COLUMN)
-        local password=$(echo "$line" | cut -f $PASSWORD_COLUMN)
-        local hint=$(echo "$line" | cut -f $HINT_COLUMN)
-        local template=$(echo "$line" | cut -f $TEMPLATE_COLUMN)
+        local user=`esc_bs $(echo "$line" | cut -f $USER_COLUMN)`
+        local password=`esc_bs $(echo "$line" | cut -f $PASSWORD_COLUMN)`
+        local hint=`esc_bs $(echo "$line" | cut -f $HINT_COLUMN)`
+        local template=`esc_bs $(echo "$line" | cut -f $TEMPLATE_COLUMN)`
         if [ -z "$template" ]; then
             template="Username,Tab,Password,Return"
         fi
