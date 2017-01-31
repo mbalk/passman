@@ -170,22 +170,22 @@ function gettemplate
 function add
 {
 
-	IFS= read -r -p "Identifier: " site
-	local site=$(echo "$site" | sed -e 's/^ *//g' -e 's/ *$//g') # remove leading/trailing whitespaces
-	if [[ -z "$site" ]]; then
-		echo "Please specify a site identifier."
-		exit 1
-	fi
+    IFS= read -r -p "Identifier: " site
+    local site=$(echo "$site" | sed -e 's/^ *//g' -e 's/ *$//g') # remove leading/trailing whitespaces
+    if [[ -z "$site" ]]; then
+        echo "Please specify a site identifier."
+        exit 1
+    fi
 
-	IFS= read -p "Username (optional): " user
-	IFS= read -r -s -p "Password (will not be echoed): " pass
-	echo
+    IFS= read -p "Username (optional): " user
+    IFS= read -r -s -p "Password (will not be echoed): " pass
+    echo
 
-	echo -e "$site$user$pass" | grep -P '\t' > /dev/null
-	if [[ $? -eq 0 ]]; then
-		echo "All values must NOT contain any <TAB> characters."
-		exit 1
-	fi
+    echo -e "$site$user$pass" | grep -P '\t' > /dev/null
+    if [[ $? -eq 0 ]]; then
+        echo "All values must NOT contain any <TAB> characters."
+        exit 1
+    fi
 
     if [[ -z "$pass" ]]; then
         local pass=$(pwgen -s1 "$PASS_LENGTH")
