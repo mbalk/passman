@@ -283,12 +283,12 @@ function autotype
 
 function type_string
 {
-    echo "str $1" | xte
+    xdotool type "$1"
 }
 
 function press_key
 {
-    echo "key $1" | xte
+    xdotool key "$1"
 }
 
 # Fills credentials by selecting the desired site with dmenu in a (e.g. browser) form

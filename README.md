@@ -19,11 +19,10 @@
    [gpg2](http://www.gnupg.org/),
    [dmenu](http://tools.suckless.org/dmenu/),
    [xdotool](http://www.semicomplete.com/projects/xdotool/),
-   [xte](http://hoopajoo.net/projects/xautomation.html),
    [pwgen](http://sourceforge.net/projects/pwgen/)
 
    For Debian/Ubuntu users, this translates into having the following packages
-   installed: bash, gnupg2, suckless-tools, xdotool, xautomation and pwgen.
+   installed: bash, gnupg2, suckless-tools, xdotool and pwgen.
 
 2. Run passman-config. It will set up $HOME/.passman/config for you.
 
@@ -48,8 +47,9 @@
 
     $ passman submitform
 
-A dmenu dialog will pop up, let you chose the desired entry and enter the credentials via xte
-in the form "user<TAB>password<RETURN>" or "password<RETURN>" if there is no user for an entry.
+A dmenu dialog will pop up, let you chose the desired entry and enter the
+credentials via xdotool in the form "user<TAB>password<RETURN>" or
+"password<RETURN>" if there is no user for an entry.
 
 #### Filling forms (automatically try to match site key against current window name)
 
