@@ -138,10 +138,12 @@ function get
 {
     local key="$1"
     if [[ -n "$key" ]]; then
-        if [[ -z "$ONLY_PW" ]]; then
-            get_passfile_line "$key" | cut -f $USER_COLUMN,$PASSWORD_COLUMN
-        else
+        if [[ "$ONLY_PART" = "username" ]]; then
+            get_passfile_line "$key" | cut -f $USER_COLUMN
+        elif [[ "$ONLY_PART" = "password" ]]; then
             get_passfile_line "$key" | cut -f $PASSWORD_COLUMN
+        else
+            get_passfile_line "$key" | cut -f $USER_COLUMN,$PASSWORD_COLUMN
         fi
     fi
 }
@@ -267,8 +269,10 @@ function autotype
     local user="$1"
     local password="$2"
     local template="$3"
-    if [ -z "$user" ] || [ -n "$ONLY_PW" ]; then
+    if [ -z "$user" ] || [ "$ONLY_PART" = "password" ]; then
         template="Password,Return"
+    elif [ "$ONLY_PART" = "username" ]; then
+        template="Username,Return"
     fi
     for part in ${template//,/ }; do
         if [ "$part" = "Username" ]; then
@@ -369,7 +373,15 @@ function autosubmitform
 # This will only type the password without username.
 function onlypw
 {
-    export ONLY_PW=1
+    export ONLY_PART="password"
+    eval "$@"
+}
+
+# Call "passman onlyuser <action> <params>" as you would call passman normally with "passman <action> <params>"
+# This will only type the username without password.
+function onlyuser
+{
+    export ONLY_PART="username"
     eval "$@"
 }
 
